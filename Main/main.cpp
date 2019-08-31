@@ -37,26 +37,29 @@ int main(int argc, char *argv[]){
       // Final filename as filename-i-
       fileout.append(argument);
       fileout.append(".txt");
-      double h = 1.0/(n);
+      double h = 1.0/(n+1);
       double hh = h*h;
       // Set up arrays for the simple case
-      double *d = new double [n+1]; double *g = new double [n+1]; double *a = new double [n];
-      double *b = new double [n];
-      double *solution = new double [n+1]; double *x = new double[n+1];
+      double *d = new double [n]; double *g = new double [n]; double *a = new double [n-1];
+      double *b = new double [n-1];
+      double *solution = new double [n+2]; double *x = new double[n+2];
       // Quick setup of updated diagonal elements and value of
-      solution[0] = solution[n] = 0.0;
-      for (int i = 0; i <= n; i++) {
-          d[i] = 2;
+      solution[0] = solution[n+1] = 0.0;
+
+      for (int i = 0; i <= n+1; i++){
+          x[i]= i*h;
+      }
+
+      for (int i = 0; i < n; i++) {
+          d[i] = 2;             // We get that d[0]=d_1
+          g[i] = hh*f(x[i+1]);  // We get that g[0]=g_1
       };
 
-      for (int i=0; i < n; i++) {
-          a[i]=-1; b[i]=-1;
+      for (int i=0; i < n-1; i++) {
+          a[i]=-1;
+          b[i]=-1;
       }
 
-      for (int i = 0; i <= n; i++){
-      x[i]= i*h;
-      g[i] = hh*f(x[i]);
-      }
 
       // Forward substitution
       for (int i = 0; i < n; ++i) {
@@ -64,9 +67,9 @@ int main(int argc, char *argv[]){
           g[i+1]-=a[i]*g[i]/d[i];
       }
       // Backward substitution
-      solution[n]=g[n]/d[n];
-      for (int i = 1; i < n; ++i) {
-          solution[n-i]=(g[n-i]-b[n-i]*solution[n-i+1])/d[n-i];
+      solution[n-1]=g[n-1]/d[n-1];
+      for (int i = 2; i < n+1; ++i) {
+          solution[n-i]=(g[n-i]-b[n-i]*solution[n+1-i])/d[n-i];
       }
       //exact
       double diff = 0.0;
