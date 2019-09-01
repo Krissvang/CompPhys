@@ -13,6 +13,20 @@ inline double f(double x){return 100.0*exp(-10.0*x);
 }
 inline double exact(double x) {return 1.0-(1-exp(-10))*x-exp(-10*x);}
 
+//Triagonal matrix algorithm 1
+
+double * t1(double* a, double* b, double* d, double* solution, double* g, int n){
+    // Forward substitution
+    for (int i = 0; i < n; ++i) {
+        d[i+1]-=a[i]*b[i]/d[i];
+        g[i+1]-=a[i]*g[i]/d[i];
+    }
+    // Backward substitution
+    solution[n-1]=g[n-1]/d[n-1];
+    for (int i = 2; i < n+1; ++i) {
+        solution[n-i]=(g[n-i]-b[n-i]*solution[n+1-i])/d[n-i];}
+    return solution;
+}
 // Begin main program
 int main(int argc, char *argv[]){
   int exponent;
@@ -59,8 +73,7 @@ int main(int argc, char *argv[]){
           a[i]=-1;
           b[i]=-1;
       }
-
-
+      /*
       // Forward substitution
       for (int i = 0; i < n; ++i) {
           d[i+1]-=a[i]*b[i]/d[i];
@@ -71,6 +84,8 @@ int main(int argc, char *argv[]){
       for (int i = 2; i < n+1; ++i) {
           solution[n-i]=(g[n-i]-b[n-i]*solution[n+1-i])/d[n-i];
       }
+      */
+      solution=t1(a,b,d,solution,g,n);
       //exact
       double diff = 0.0;
       for (int i = 0; i <= n; i++) {
