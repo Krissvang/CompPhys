@@ -1,9 +1,9 @@
-PWD c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1
+PWD c:/Users/krist/Documents/ComputationalPhysics/Latex
 INPUT c:/texlive/2018/texmf.cnf
 INPUT c:/texlive/2018/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.tex
-OUTPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.log
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.tex
+OUTPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.log
 INPUT c:/texlive/2018/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2018/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2018/texmf-dist/tex/latex/base/size10.clo
@@ -174,11 +174,11 @@ INPUT c:/texlive/2018/texmf-dist/tex/latex/amsfonts/amssymb.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/amsfonts/amssymb.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/comment/comment.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/comment/comment.sty
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/mymacros.sty
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/mymacros.sty
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.aux
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.aux
-OUTPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.aux
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/mymacros.sty
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/mymacros.sty
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.aux
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.aux
+OUTPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.aux
 INPUT c:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT c:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
@@ -193,14 +193,14 @@ INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
 INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.out
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.out
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.out
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.out
-OUTPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.pdf
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.out
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.out
-OUTPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.out
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
+OUTPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.pdf
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
+OUTPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
 INPUT c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
@@ -226,9 +226,9 @@ INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.aux
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.out
-INPUT c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.out
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.aux
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb

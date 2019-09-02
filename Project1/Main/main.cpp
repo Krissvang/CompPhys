@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <cmath>
 #include <string>
+#include "time.h"
 // use namespace for output and input
 using namespace std;
 
@@ -13,7 +14,7 @@ inline double f(double x){return 100.0*exp(-10.0*x);
 }
 inline double exact(double x) {return 1.0-(1-exp(-10))*x-exp(-10*x);}
 
-//Triagonal matrix algorithm 1
+//Triagonal matrix algorithm
 
 double * t1(double* a, double* b, double* d, double* solution, double* g, int n){
     // Forward substitution
@@ -27,9 +28,32 @@ double * t1(double* a, double* b, double* d, double* solution, double* g, int n)
         solution[n-i]=(g[n-i]-b[n-i]*solution[n+1-i])/d[n-i];}
     return solution;
 }
+
+//Specialized matrix algorithm
+//Here the diagonal elements are identical, and the of diagonal elements are identical.
+double * t2(double* a, double *d, double* solution, double* g, int n){
+    double e=a[0];
+    double ee=e*e;
+    // Forward substitution
+    for (int i = 0; i < n; ++i) {
+        d[i+1]-=ee/d[i];
+        g[i+1]-=e*g[i]/d[i];
+    }
+    //Backward substitution
+    solution[n-1]=g[n-1]/d[n-1];
+    for (int i = 2; i < n+1; ++i) {
+        solution[n-i]=(g[n-i]-e*solution[n+1-i])/d[n-i];
+    }
+    return solution;
+
+}
+
+
+
 // Begin main program
 int main(int argc, char *argv[]){
   int exponent;
+  clock_t start1, finish1, start2, finish2;
     string filename;
     // We read also the basic name for the output file and the highest power of 10^n we want
     if( argc <= 1 ){
@@ -73,25 +97,32 @@ int main(int argc, char *argv[]){
           a[i]=-1;
           b[i]=-1;
       }
-      /*
-      // Forward substitution
-      for (int i = 0; i < n; ++i) {
-          d[i+1]-=a[i]*b[i]/d[i];
-          g[i+1]-=a[i]*g[i]/d[i];
+
+      if(atoi(argv[3])==0){
+        start1=clock();
+        solution=t1(a,b,d,solution,g,n);
+        finish1=clock();
+        double time1=(double) (finish1-start1)/(CLOCKS_PER_SEC);
+        cout<<"When n = " << n << ", time used for general algorithm is = "<< time1 << endl;
       }
-      // Backward substitution
-      solution[n-1]=g[n-1]/d[n-1];
-      for (int i = 2; i < n+1; ++i) {
-          solution[n-i]=(g[n-i]-b[n-i]*solution[n+1-i])/d[n-i];
+      else if (atoi(argv[3])==1) {
+        start2=clock();
+        solution=t2(a,d,solution,g,n);
+        finish2=clock();
+        double time2=(double) (finish2-start2)/(CLOCKS_PER_SEC);
+        cout <<"When n = "<< n << ", time used for specialized algorithm is "<< time2 << endl;
       }
-      */
-      solution=t1(a,b,d,solution,g,n);
+      else{
+          cout << "Please choose a algorithm to run. Choose with the third command line argument."<<endl;
+          cout << "0 = General tridiagonal matrix set of linear equations"<<endl;
+          exit(0);
+      }
       //exact
       double diff = 0.0;
       for (int i = 0; i <= n; i++) {
           diff += fabs(solution[i]-exact(x[i]));
       }
-      cout << "By averaging we get that the average error is "<< diff/n << endl;
+      //cout << "By averaging we get that the average error is "<< diff/n << endl;
 
       ofile.open(fileout);
       ofile << setiosflags(ios::showpoint | ios::uppercase);

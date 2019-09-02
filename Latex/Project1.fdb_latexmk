@@ -1,10 +1,10 @@
 # Fdb version 3
-["pdflatex"] 1567253626 "c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.tex" "c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.pdf" "Project1" 1567253627
-  "Project1.aux" 1567253627 747 dc1891ddac6f20ea110f611cb7957019 ""
-  "Project1.out" 1567253627 47 a02d95553e30b97ff125b1aa17cf9044 ""
-  "Project1.tex" 1567253623 2215 64c8ed1acb6d81c443df70b65493d36d ""
-  "c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.aux" 1567253627 747 dc1891ddac6f20ea110f611cb7957019 ""
-  "c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.tex" 1567253623 2215 64c8ed1acb6d81c443df70b65493d36d ""
+["pdflatex"] 1567440110 "c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.tex" "c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.pdf" "Project1" 1567440113
+  "Project1.aux" 1567440113 747 dc1891ddac6f20ea110f611cb7957019 ""
+  "Project1.out" 1567440113 47 a02d95553e30b97ff125b1aa17cf9044 ""
+  "Project1.tex" 1567440108 2227 8727e798c1ece23eef8dfa580e0b9c48 ""
+  "c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.aux" 1567440113 747 dc1891ddac6f20ea110f611cb7957019 ""
+  "c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.tex" 1567440108 2227 8727e798c1ece23eef8dfa580e0b9c48 ""
   "c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1533409523 3332 103109f5612ad95229751940c61aada0 ""
   "c:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1533406659 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1533406660 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -147,9 +147,11 @@
   "c:/texlive/2018/texmf.cnf" 1533413903 673 4ae7b2f49cee444c5343a45b5d0f169c ""
   "mymacros.sty" 1567245455 365 a23d05046816ff9cd71c74e74b698e44 ""
   (generated)
-  "c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.log"
+  "c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.log"
+  "Project1.log"
   "c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.pdf"
-  "Project1.aux"
+  "c:/Users/krist/Documents/Latex documents/ComputationalPhysics/Project1/Project1.log"
   "Project1.pdf"
   "Project1.out"
-  "Project1.log"
+  "c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.pdf"
+  "Project1.aux"
