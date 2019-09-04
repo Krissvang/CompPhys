@@ -19,9 +19,19 @@
 
 \begin{document}
 \begin{center}
-  \huge \textbf{Project 1}
+  \large \textbf{Solving the 1D-Poisson Equation Numerically}
+
+  \text{Kristian Gjestad Vangsnes}
+  
+  \textit{Department of physics, University of Oslo}
+
+
+  \text{Date: 9. September 2019}
 \end{center}
 \section{Introduction}
+
+
+\section{Theory}
 In this project we study the one-dimentional Poisson equation 
 with Dirichlet boundary conditions which reads 
 
@@ -29,6 +39,10 @@ with Dirichlet boundary conditions which reads
  -u''(x)=f(x),\quad x\in (0,1),\quad u(0)=u(1)=0.
 \end{equation*}
 
+We will use the source term $f(x)=100e^{-10x}$. This gives the particular solution 
+$u(x)=1-(1-e^{-10})x-e^{-10x}$. We will compare our numerical solution to this exact solution.
+
+\section{Numerical methods}
 In order to model this equation in a computer we need to define the 
 discretized approximated solution to $ u(x) $ as $v_i=v(x_i) $ where
  $x_i=x_0+ih=ih$ since $x_0=0$. We let $x_{n+1}=1$, this means $h=\frac{1}{n+1}$.
@@ -57,44 +71,66 @@ We see that $u''(x)=\frac{u(x+h)+u(x-h)-2u(x)}{h^2}-O(h^4)$. Hence for the appro
    g_1\\g_2\\\vdots\\g_n
  \end{bmatrix}
  $$
-We will use the source term $f(x)=100e^{-10x}$, this gives the particular solution 
-$u(x)=1-(1-e^{-10})x-e^{-10x}$. This is easy to see since $-e^{-10x}$ is the general solution,
- hence $-u''(x)=f(x)$, and $u(0)=u(1)=0$ is trivial. 
 
- \section{General algorithm}
- The general algorithm to solve a set of equation on a tridiagonal form is done by a forward and backward substitution. On matrix form the problem is $\mathbf{A}\mathbf{v}=\mathbf{g}$. Where 
+
+
+ \subsection{General algorithm}
+ The general algorithm to solve a set of equation on a tridiagonal form is done by Gaussian elimination, which is a forward- and a backward substitution. On matrix form the problem is $\mathbf{A}\mathbf{v}=\mathbf{g}$. Where $\mathbf{v}$ contains the unknowns $v_i$. In our case the unknowns are the solution to the Poisson equation at $x_i=ih$, i.e. $v(x_i)=v_i$.
  $$
  \mathbf{A}=  \begin{bmatrix}
-  2 & -1 & 0 & \dots & ... & 0 \\
-  -1 & 2 & -1 & 0 & ... & 0 \\
-  0  & -1 & 2 & -1 & 0 & ... \\
+  d_1 & b_1 & 0 & \dots & ... & 0 \\
+  a_1 &d_2 & b_2 & 0 & ... & 0 \\
+  0  & a_2 & d_3 & b_3 & 0 & ... \\
   \vdots & 0 & \ddots & \ddots & \ddots & ...\\
-  0 & ... & ... & -1 & 2 & -1\\
-  0 & ... & ... & 0 & -1 & 2 
- \end{bmatrix}
+  0 & ... & ... & a_{n-2} & d_{n-1} & b_{n-1}\\
+  0 & ... & ... & 0 & a_{n-1} & d_{n} 
+ \end{bmatrix}, \qquad \mathbf{g}=\begin{bmatrix}
+  g_1 \\ g_2 \\ \vdots \\ g_n
+ \end{bmatrix}.
  $$
+Component wise the forward substitution is given by 
+$$\tilde{d}_{i+1}=d_{i+1}-\frac{a_ib_i}{\tilde{d_i}}$$  $$\tilde{g}_{i+1}=g_{i+1}-\frac{a_i\tilde{g_i}}{\tilde{d_i}}$$ Where $\tilde{d_1}=d_1$ and $\tilde{g}_1=g_1$. Now our problem in on the form $\mathbf{\tilde{A}}\mathbf{v}=\mathbf{\tilde{g}}$ where $$
+\mathbf{\tilde{A}}=  \begin{bmatrix}
+ \tilde{d}_1 & b_1 & 0 & \dots & ... & 0 \\
+ 0 &\tilde{d}_2 & b_2 & 0 & ... & 0 \\
+ 0  & 0 & \tilde{d}_3 & b_3 & 0 & ... \\
+ \vdots & 0 & \ddots & \ddots & \ddots & ...\\
+ 0 & ... & ... & 0 & \tilde{d}_{n-1} & b_{n-1}\\
+ 0 & ... & ... & 0 & 0 & \tilde{d}_{n} 
+\end{bmatrix}, \qquad \mathbf{g}=\begin{bmatrix}
+ \tilde{g}_1 \\ \tilde{g}_2 \\ \vdots \\ \tilde{g}_n
+\end{bmatrix}.
+$$
+To get the problem to a diagonal form we have to perform a backward substitution, this is done component wise by 
+$$v_{n-i}=\frac{\tilde{g}_{n-i}-b_{n-i}v_{n+1-i}}{\tilde{d}_{n-i}}$$ where $v_{n}=\frac{\tilde{g}_n}{\tilde{d}_n}$. The number of floating points operations (FLOPS) performed in this general algorithm is $9n$, $6n$ FLOPS in the forward substitution, two subtractions, two multiplications and two divisions. $3n$ FLOPS in the backward substitution, one subtraction, one multiplication and one division.
 
+
+\subsection{Specialized algorithm}
+
+
+
+\section{results}
+
+This algorithm was programed using c++ and the solution for matrix size n=10, 100 and 1000 was compared to the exact solution and plotted using python as shown below.
 
  \begin{figure}[h]
   \begin{subfigure}{.5\textwidth}
     \centering 
-    \includegraphics[scale=0.4]{alg-0-n10plot.png}
-    \caption{Test}
-    \label{fig:sub1}
+    \includegraphics[scale=0.5]{alg-0-n10plot.png}
   \end{subfigure}
   \begin{subfigure}{.5\textwidth}
     \centering
-    \includegraphics[scale=0.4]{alg-0-n100plot.png}
-    \caption{Test 1}
+    \includegraphics[scale=0.5]{alg-0-n100plot.png}
   \end{subfigure}
   \begin{subfigure}{.5\textwidth}
     \centering
-    \includegraphics[scale=0.4]{alg-0-n1000plot.png}
-    \caption{Test 2}
+    \includegraphics[scale=0.5]{alg-0-n1000plot.png}
   \end{subfigure}
-    
-
+  \caption{Numerical solution of the Poisson equation for matrix size n=10, 100 and 1000 is plotted as red dots. The exact solution is plotted in green.}
+  \label{fig:numerical_solution}
 \end{figure}
+
+
 
 
 \end{document}
