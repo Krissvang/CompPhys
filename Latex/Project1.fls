@@ -176,6 +176,12 @@ INPUT c:/texlive/2018/texmf-dist/tex/latex/comment/comment.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/comment/comment.sty
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/mymacros.sty
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/mymacros.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/caption/caption.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/caption/caption.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/caption/caption3.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/caption/caption3.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/caption/subcaption.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/caption/subcaption.sty
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.aux
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.aux
 OUTPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.aux
@@ -226,6 +232,16 @@ INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/./img/alg-0-n10plot.png
+INPUT ./img/alg-0-n10plot.png
+INPUT ./img/alg-0-n10plot.png
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/./img/alg-0-n100plot.png
+INPUT ./img/alg-0-n100plot.png
+INPUT ./img/alg-0-n100plot.png
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/./img/alg-0-n1000plot.png
+INPUT ./img/alg-0-n1000plot.png
+INPUT ./img/alg-0-n1000plot.png
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.aux
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Latex/Project1.out
@@ -237,5 +253,6 @@ INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb

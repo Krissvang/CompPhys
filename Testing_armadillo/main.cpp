@@ -23,7 +23,7 @@ int main()
 
     arma::lu(P, L, U, A);
 
-    cout << A << endl << P << endl << L << endl << U << endl;
+    cout << P << endl;
 
     return 0;
 }

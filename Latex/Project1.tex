@@ -9,9 +9,13 @@
 \usepackage{amssymb}
 \usepackage{comment}
 \usepackage{mymacros}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \setlength{\parindent}{0cm} 
 \setlength{\parskip}{1em}
+
+\graphicspath{{./img/}}
 
 \begin{document}
 \begin{center}
@@ -55,10 +59,42 @@ We see that $u''(x)=\frac{u(x+h)+u(x-h)-2u(x)}{h^2}-O(h^4)$. Hence for the appro
  $$
 We will use the source term $f(x)=100e^{-10x}$, this gives the particular solution 
 $u(x)=1-(1-e^{-10})x-e^{-10x}$. This is easy to see since $-e^{-10x}$ is the general solution,
- hence $-u''(x)=f(x)$, and $u(0)=u(1)=0$ is trivial. We will compare this solution to our numerical solution.
+ hence $-u''(x)=f(x)$, and $u(0)=u(1)=0$ is trivial. 
+
+ \section{General algorithm}
+ The general algorithm to solve a set of equation on a tridiagonal form is done by a forward and backward substitution. On matrix form the problem is $\mathbf{A}\mathbf{v}=\mathbf{g}$. Where 
+ $$
+ \mathbf{A}=  \begin{bmatrix}
+  2 & -1 & 0 & \dots & ... & 0 \\
+  -1 & 2 & -1 & 0 & ... & 0 \\
+  0  & -1 & 2 & -1 & 0 & ... \\
+  \vdots & 0 & \ddots & \ddots & \ddots & ...\\
+  0 & ... & ... & -1 & 2 & -1\\
+  0 & ... & ... & 0 & -1 & 2 
+ \end{bmatrix}
+ $$
 
 
-Then we have
+ \begin{figure}[h]
+  \begin{subfigure}{.5\textwidth}
+    \centering 
+    \includegraphics[scale=0.4]{alg-0-n10plot.png}
+    \caption{Test}
+    \label{fig:sub1}
+  \end{subfigure}
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \includegraphics[scale=0.4]{alg-0-n100plot.png}
+    \caption{Test 1}
+  \end{subfigure}
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \includegraphics[scale=0.4]{alg-0-n1000plot.png}
+    \caption{Test 2}
+  \end{subfigure}
+    
+
+\end{figure}
 
 
 \end{document}

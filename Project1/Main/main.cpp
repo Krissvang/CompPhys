@@ -4,9 +4,10 @@
 #include <cmath>
 #include <string>
 #include "time.h"
+#include <armadillo>
 // use namespace for output and input
 using namespace std;
-
+using namespace arma;
 // object for output files
 ofstream ofile;
 // Functions used
@@ -14,8 +15,7 @@ inline double f(double x){return 100.0*exp(-10.0*x);
 }
 inline double exact(double x) {return 1.0-(1-exp(-10))*x-exp(-10*x);}
 
-//Triagonal matrix algorithm
-
+//General triagonal matrix algorithm
 double * t1(double* a, double* b, double* d, double* solution, double* g, int n){
     // Forward substitution
     for (int i = 0; i < n; ++i) {
@@ -32,6 +32,7 @@ double * t1(double* a, double* b, double* d, double* solution, double* g, int n)
 //Specialized matrix algorithm
 //Here the diagonal elements are identical, and the of diagonal elements are identical.
 double * t2(double* a, double *d, double* solution, double* g, int n){
+    //Saves n FLOPS to calculate e*e before the substitutions.
     double e=a[0];
     double ee=e*e;
     // Forward substitution
@@ -44,16 +45,52 @@ double * t2(double* a, double *d, double* solution, double* g, int n){
     for (int i = 2; i < n+1; ++i) {
         solution[n-i]=(g[n-i]-e*solution[n+1-i])/d[n-i];
     }
+
     return solution;
 
 }
 
+//Armadillo LU decomposition
+double * t3(double* a, double * b, double *d, double *solution, double* g, unsigned int n){
+    Mat<double> A(n,n,fill::zeros);
+    for (unsigned int i = 0; i < n; ++i) {
+        A(i,i)=d[i];
+    }
+    for (unsigned int i = 0; i < n-1; ++i) {
+        A(i,i+1)=a[i];
+        A(i+1,i)=b[i];
+    }
+    Mat<double> L, U;
+    lu(L, U, A);
+    double * y = new double [n];
 
+    //Solving Ly=g
+    y[0]=g[0]/L(0,0);
+    for (unsigned int i = 1; i < n; ++i) {
+        y[i]= g[i];
+        for (unsigned int j = 0; j < i; ++j) {
+            y[i]-=L(i,j)*y[j];
+        }
+        y[i]/=L(i,i);
+    }
+    //Solving Ux=y
+    solution[n-1]=y[n-1]/U(n-1,n-1);
+    //solution(n-2)=(g(2)-U(n-2,n-1)y(n-1))/U(n-2,n-2)
+    for (unsigned int i = 2; i < n+1; ++i) {
+        solution[n-i]=y[n-i];
+        for (unsigned int j = 1; j < i; ++j) {
+            solution[n-i]-=U(n-i,n-j)*solution[n-j];
+        }
+        solution[n-i]/=U(n-i,n-i);
+    }
+    delete [] y;
+    return solution;
+}
 
 // Begin main program
 int main(int argc, char *argv[]){
   int exponent;
-  clock_t start1, finish1, start2, finish2;
+  clock_t start1, start2, start3, finish1, finish2, finish3;
     string filename;
     // We read also the basic name for the output file and the highest power of 10^n we want
     if( argc <= 1 ){
@@ -70,13 +107,14 @@ int main(int argc, char *argv[]){
       int  n = (int) pow(10.0,i);
       // Declare new file name
       string fileout = filename;
+      fileout.append("-");
       // Convert the power 10^i to a string
-      string argument = to_string(i);
+      string argument = to_string(int(pow(10,i)));
       // Final filename as filename-i-
-      fileout.append(argument);
-      fileout.append(".txt");
+
       double h = 1.0/(n+1);
       double hh = h*h;
+
       // Set up arrays for the simple case
       double *d = new double [n]; double *g = new double [n]; double *a = new double [n-1];
       double *b = new double [n-1];
@@ -104,6 +142,7 @@ int main(int argc, char *argv[]){
         finish1=clock();
         double time1=(double) (finish1-start1)/(CLOCKS_PER_SEC);
         cout<<"When n = " << n << ", time used for general algorithm is = "<< time1 << endl;
+        fileout.append("alg-0-n=");
       }
       else if (atoi(argv[3])==1) {
         start2=clock();
@@ -111,29 +150,36 @@ int main(int argc, char *argv[]){
         finish2=clock();
         double time2=(double) (finish2-start2)/(CLOCKS_PER_SEC);
         cout <<"When n = "<< n << ", time used for specialized algorithm is "<< time2 << endl;
+        fileout.append("alg-1-n=");
+      }
+      else if (atoi(argv[3])==2) {
+          start3=clock();
+          solution=t3(a,b,d,solution,g,n);
+          finish3=clock();
+          double time3 = (double) (finish3-start3)/(CLOCKS_PER_SEC);
+          cout << "When n = "<< n << ", time used for LU algorighm is " << time3 << endl;
+          fileout.append("alg-2-n=");
       }
       else{
           cout << "Please choose a algorithm to run. Choose with the third command line argument."<<endl;
-          cout << "0 = General tridiagonal matrix set of linear equations"<<endl;
+          cout << "0 = General tridiagonal matrix set of linear equations."<<endl;
+          cout << "1 = Specialized tridiagonal matrix set of linear equations."<<endl;
+          cout << "2 = LU decomposition of linear equations."<<endl;
           exit(0);
       }
       //exact
-      double diff = 0.0;
-      for (int i = 0; i <= n; i++) {
-          diff += fabs(solution[i]-exact(x[i]));
-      }
-      //cout << "By averaging we get that the average error is "<< diff/n << endl;
-
+      fileout.append(argument);
+      fileout.append(".txt");
       ofile.open(fileout);
       ofile << setiosflags(ios::showpoint | ios::uppercase);
       //      ofile << "       x:             approx:          exact:       relative error" << endl;
       for (int i = 1; i < n;i++) {
     double xval = x[i];
      double RelativeError = fabs((exact(xval)-solution[i])/exact(xval));
-         ofile << setw(15) << setprecision(8) << xval;
-         ofile << setw(15) << setprecision(8) << solution[i];
-         ofile << setw(15) << setprecision(8) << exact(xval);
-         ofile << setw(15) << setprecision(8) << log10(RelativeError) << endl;
+         ofile << setw(20) << setprecision(8) << xval;
+         ofile << setw(20) << setprecision(8) << solution[i];
+         ofile << setw(20) << setprecision(8) << exact(xval);
+         ofile << setw(20) << setprecision(8) << log10(RelativeError) << endl;
       }
       ofile.close();
       delete [] x; delete [] d; delete [] g; delete [] a; delete [] solution;
