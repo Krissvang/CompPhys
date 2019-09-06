@@ -23,28 +23,50 @@ double * t1(double* a, double* b, double* d, double* solution, double* g, int n)
         g[i+1]-=a[i]*g[i]/d[i];
     }
     // Backward substitution
-    solution[n-1]=g[n-1]/d[n-1];
+    solution[n]=g[n-1]/d[n-1];
+    //Choose i=2 to i=n because that gives the least amount of operations.
     for (int i = 2; i < n+1; ++i) {
-        solution[n-i]=(g[n-i]-b[n-i]*solution[n+1-i])/d[n-i];}
+        solution[n-i+1]=(g[n-i]-b[n-i]*solution[n+2-i])/d[n-i];}
     return solution;
 }
 
 //Specialized matrix algorithm
 //Here the diagonal elements are identical, and the of diagonal elements are identical.
-double * t2(double* a, double *d, double* solution, double* g, int n){
+double * t2(double* a, double *d, double *d2, double* solution, double* g, double* g2, int n){
     //Saves n FLOPS to calculate e*e before the substitutions.
-    double e=a[0];
-    double ee=e*e;
     // Forward substitution
-    for (int i = 0; i < n; ++i) {
-        d[i+1]-=ee/d[i];
-        g[i+1]-=e*g[i]/d[i];
-    }
-    //Backward substitution
-    solution[n-1]=g[n-1]/d[n-1];
-    for (int i = 2; i < n+1; ++i) {
-        solution[n-i]=(g[n-i]-e*solution[n+1-i])/d[n-i];
-    }
+    int e = a[0];
+    int ee=e*e;
+
+    //We have a special algorithm when the off diagonal
+    // elements are -1 and the diagonal elements are 2.
+        if(e==-1 && d[0]==2){
+            //Forward substitution
+            for (int i = 0; i < n; ++i) {
+
+                g[i+1]+=g[i]/d2[i];
+            }
+            //Backward substitution
+            solution[n]=g[n-1]/d2[n-1];
+            for (int i = 2; i < n+1; ++i) {
+                solution[n-i+1]=(g[n-i]+solution[n+2-i])/d2[n-i];
+
+            }
+
+        }
+        else {
+            //Forward substitution
+            for (int i = 0; i < n; ++i) {
+                d[i+1]-=ee/d[i];
+                g[i+1]-=e*g[i]/d[i];
+            }
+            //Backward substitution
+            solution[n]=g[n-1]/d[n-1];
+            for (int i = 2; i < n+1; ++i) {
+                solution[n+1-i]=(g[n-i]+solution[n+2-i])/d[n-i];
+            }
+
+        }
 
     return solution;
 
@@ -74,14 +96,13 @@ double * t3(double* a, double * b, double *d, double *solution, double* g, unsig
         y[i]/=L(i,i);
     }
     //Solving Ux=y
-    solution[n-1]=y[n-1]/U(n-1,n-1);
-    //solution(n-2)=(g(2)-U(n-2,n-1)y(n-1))/U(n-2,n-2)
+    solution[n]=y[n-1]/U(n-1,n-1);
     for (unsigned int i = 2; i < n+1; ++i) {
-        solution[n-i]=y[n-i];
+        solution[n-i+1]=y[n-i];
         for (unsigned int j = 1; j < i; ++j) {
-            solution[n-i]-=U(n-i,n-j)*solution[n-j];
+            solution[n-i+1]-=U(n-i,n-j)*solution[n-j+1];
         }
-        solution[n-i]/=U(n-i,n-i);
+        solution[n-i+1]/=U(n-i,n-i);
     }
     delete [] y;
     return solution;
@@ -117,7 +138,7 @@ int main(int argc, char *argv[]){
 
       // Set up arrays for the simple case
       double *d = new double [n]; double *g = new double [n]; double *a = new double [n-1];
-      double *b = new double [n-1];
+      double *b = new double [n-1]; double *d2 = new double [n]; double *g2 = new double [n];
       double *solution = new double [n+2]; double *x = new double[n+2];
       // Quick setup of updated diagonal elements and value of
       solution[0] = solution[n+1] = 0.0;
@@ -129,13 +150,14 @@ int main(int argc, char *argv[]){
       for (int i = 0; i < n; i++) {
           d[i] = 2;             // We get that d[0]=d_1
           g[i] = hh*f(x[i+1]);  // We get that g[0]=g_1
+          d2[i]=(double)(i+2)/(i+1);
+          g2[i]=g[i]/d2[i];
       };
 
       for (int i=0; i < n-1; i++) {
           a[i]=-1;
           b[i]=-1;
       }
-
       if(atoi(argv[3])==0){
         start1=clock();
         solution=t1(a,b,d,solution,g,n);
@@ -146,7 +168,7 @@ int main(int argc, char *argv[]){
       }
       else if (atoi(argv[3])==1) {
         start2=clock();
-        solution=t2(a,d,solution,g,n);
+        solution=t2(a,d,d2,solution,g,g2,n);
         finish2=clock();
         double time2=(double) (finish2-start2)/(CLOCKS_PER_SEC);
         cout <<"When n = "<< n << ", time used for specialized algorithm is "<< time2 << endl;
@@ -170,10 +192,11 @@ int main(int argc, char *argv[]){
       //exact
       fileout.append(argument);
       fileout.append(".txt");
+
       ofile.open(fileout);
       ofile << setiosflags(ios::showpoint | ios::uppercase);
       //      ofile << "       x:             approx:          exact:       relative error" << endl;
-      for (int i = 1; i < n;i++) {
+      for (int i = 0; i < n+1;i++) {
     double xval = x[i];
      double RelativeError = fabs((exact(xval)-solution[i])/exact(xval));
          ofile << setw(20) << setprecision(8) << xval;
@@ -182,6 +205,7 @@ int main(int argc, char *argv[]){
          ofile << setw(20) << setprecision(8) << log10(RelativeError) << endl;
       }
       ofile.close();
+
       delete [] x; delete [] d; delete [] g; delete [] a; delete [] solution;
     }
     return 0;

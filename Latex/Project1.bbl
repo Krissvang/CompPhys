@@ -1,0 +1,47 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{thomas}{article}{}
+      \name{author}{1}{}{%
+        {{hash=b6324054745e289b0fda0adc685508a8}{%
+           family={Thomas},
+           familyi={T\bibinitperiod},
+           given={L.H.},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{b6324054745e289b0fda0adc685508a8}
+      \strng{fullhash}{b6324054745e289b0fda0adc685508a8}
+      \strng{bibnamehash}{b6324054745e289b0fda0adc685508a8}
+      \strng{authorbibnamehash}{b6324054745e289b0fda0adc685508a8}
+      \strng{authornamehash}{b6324054745e289b0fda0adc685508a8}
+      \strng{authorfullhash}{b6324054745e289b0fda0adc685508a8}
+      \field{sortinit}{T}
+      \field{sortinithash}{6f7aff9db9dcfeb7f95fd5bbd2f78df9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Watson Sci. Comput. Lab Report}
+      \field{title}{Elliptic Problems in Linear Differential Equations over a Network}
+      \field{year}{1949}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
