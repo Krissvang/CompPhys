@@ -54,6 +54,9 @@ with Dirichlet boundary conditions reads
 We will use the source term $f(x)=100e^{-10x}$. This gives the particular solution 
 $u(x)=1-(1-e^{-10})x-e^{-10x}$. We will compare our numerical solution to this exact solution.
 
+We will also compute the relative error for our algorithms. The relative error is defined as 
+$$ \epsilon=\log{\left|\frac{u_{numerical}-u_{exact}}{u_{exact}}\right|}.$$
+
 \section{Numerical methods}
 In order to model this equation in a computer we need to define the 
 discretized approximated solution to $ u(x) $ as $v_i=v(x_i) $ where
@@ -84,6 +87,7 @@ We see that $u''(x)=\frac{u(x+h)+u(x-h)-2u(x)}{h^2}-O(h^4)$. Hence for the appro
  \end{bmatrix}
  $$
 
+ The relative error is computed by $$ \epsilon=\log{\left|\frac{v_{i}-u_{i}}{u_{i}}\right|}.$$
 
 
  \subsection{General algorithm}
@@ -199,7 +203,8 @@ But we can make a even better algorithm if the diagonal elements are $2$ and the
       \hline\hline
   \end{tabular}
 \end{center}
- We see that since we have precalculated multiple 
+ We see that since we have precalculated the diagonal elements and used that the off diagonal element is -1, the number of FLOPS is only $4n$.
+
 
 
 \section{Program structure}
@@ -210,7 +215,7 @@ But we can make a even better algorithm if the diagonal elements are $2$ and the
 
 The general algorithm was programed using c++ and the solution for matrix size n=10, 100 and 1000 was compared to the exact solution and plotted using python as shown below.
 
-  \begin{figure}[h!]
+  \begin{figure}[h]
     \centering 
     \includegraphics[scale=0.7]{alg-0-n10plot.png}
   \end{figure}

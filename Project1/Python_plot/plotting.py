@@ -5,8 +5,8 @@ import os
 #Creating exact solution
 def f(t):
     return 1-(1-np.exp(-10))*t-np.exp(-10.0*t)
-n=3
-alg=2
+n=7
+alg=1
 Title=""
 #Lists for names
 filenames=[]
@@ -28,7 +28,9 @@ path2="..\main"
 maxerrors = list()
 #Create file names
 plt.close('all')
+x_val=[]
 
+Errors=[-1.1797, -3.08804, -5.08005, -7.07927, -9.0791, -10.791, -9.54234]
 
 def plot_solution():
     
@@ -39,10 +41,11 @@ def plot_solution():
         #Create vectors with values                     
         xval, solution, exact, error = np.loadtxt(
         path+"-alg-%d-n=%d.txt"%(alg,pow(10,i+1)), unpack=True)
+        np.delete(error,0)
         error=error[~np.isnan(error)]
         maxerrors.append(np.max(error))
         #Interval for exact solution
-        t1=np.arange(xval[0],xval[-1],0.01)
+        t1=np.arange(xval[0],xval[-1],0.001)
         #Plot the numerical solution in red dots
         plt.figure(i+1)
         plt.plot(xval,solution,'r.',markersize=3, label="Numerical solution")
@@ -60,19 +63,22 @@ def plot_solution():
         #Close files
     for i in range(n):
         read_files[i].close()
-plot_solution()
 
 def relative_error():
     for i in range(n):
-        filenames.append(path+"-alg-%d-n=%d.txt"%(alg,pow(10,i+1))) 
-        #Open the files
-        read_files.append(open(filenames[i],"r"))                   
-        #Create vectors with values                     
-        xval, solution, exact, error = np.loadtxt(
-        path+"-alg-%d-n=%d.txt"%(alg,pow(10,i+1)), unpack=True)
-        error=error[~np.isnan(error)]
-        maxerrors.append(np.max(error))
+        x_val.append(np.log10((pow(10,i+1)+2)))
+    plt.plot(x_val,Errors,'ro-')
+    plt.title("Relative error")
+    plt.grid(1)
+    plt.xlabel('$\epsilon$')
+    plt.ylabel('$h(\epsilon)$')
+    plt.savefig('../../Latex/img/relative_error.png',dpi=199)
+
         
-        plt.figure(i+1)
+relative_error()
+            
+        
+        
+        
         
         

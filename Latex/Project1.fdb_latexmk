@@ -1,18 +1,18 @@
 # Fdb version 3
-["biber Project1"] 1567765145 "Project1.bcf" "Project1.bbl" "Project1" 1567766733
-  "Project1.bcf" 1567766733 90507 7981bbcd7b2474247bba0be78cf265b5 ""
+["biber Project1"] 1567769907 "Project1.bcf" "Project1.bbl" "Project1" 1567854455
+  "Project1.bcf" 1567854455 90507 7981bbcd7b2474247bba0be78cf265b5 ""
   "refrences.bib" 1567666291 205 d072d7ff0752aae0ec684a55c5a06f47 ""
   (generated)
   "Project1.blg"
   "Project1.bbl"
-["pdflatex"] 1567766729 "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.tex" "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.pdf" "Project1" 1567766733
-  "Project1.aux" 1567766733 2468 56b60a58ef423420d24c0fdb5b870fda ""
-  "Project1.bbl" 1567765151 1565 0b10d66159e48e306fa3ae4bdee44e7f "biber Project1"
-  "Project1.out" 1567766733 412 53ac80feb84fdfb5d23671f43fb8e488 ""
-  "Project1.run.xml" 1567766733 2332 b676ca8928ab0c4aaf996b21aa344692 ""
-  "Project1.tex" 1567766726 8958 0c761b607b5865c07c8cdb10422424bf ""
-  "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.aux" 1567766733 2468 56b60a58ef423420d24c0fdb5b870fda ""
-  "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.tex" 1567766726 8958 0c761b607b5865c07c8cdb10422424bf ""
+["pdflatex"] 1567854451 "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.tex" "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.pdf" "Project1" 1567854455
+  "Project1.aux" 1567854455 2468 1f6b72be3e58cbad7a037a95a5c9bf61 ""
+  "Project1.bbl" 1567769912 1565 0b10d66159e48e306fa3ae4bdee44e7f "biber Project1"
+  "Project1.out" 1567854455 412 53ac80feb84fdfb5d23671f43fb8e488 ""
+  "Project1.run.xml" 1567854455 2332 b676ca8928ab0c4aaf996b21aa344692 ""
+  "Project1.tex" 1567854448 9321 ec38243f361b839406020df17841fb9d ""
+  "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.aux" 1567854455 2468 1f6b72be3e58cbad7a037a95a5c9bf61 ""
+  "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.tex" 1567854448 9321 ec38243f361b839406020df17841fb9d ""
   "c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1533409523 3332 103109f5612ad95229751940c61aada0 ""
   "c:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1533406659 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1533406660 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -185,11 +185,11 @@
   "img/alg-0-n10plot.png" 1567765300 71273 977fdf9dd55a97c84bcdc5881ef53ff4 ""
   "mymacros.sty" 1567245455 365 a23d05046816ff9cd71c74e74b698e44 ""
   (generated)
+  "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.log"
   "Project1.out"
+  "Project1.bcf"
+  "Project1.pdf"
   "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.pdf"
   "Project1.aux"
-  "Project1.pdf"
-  "c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.log"
   "Project1.run.xml"
   "Project1.log"
-  "Project1.bcf"
