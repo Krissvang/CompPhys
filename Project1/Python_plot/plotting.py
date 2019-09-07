@@ -5,8 +5,11 @@ import os
 #Creating exact solution
 def f(t):
     return 1-(1-np.exp(-10))*t-np.exp(-10.0*t)
-n=7
-alg=1
+
+#Choose the number of gridpoints by gridpoints = 10^n
+n=4
+#Choose which algorithm to run, 0=general, 1 =specialized and 2)=LU.
+alg=2
 Title=""
 #Lists for names
 filenames=[]
@@ -24,7 +27,7 @@ elif alg==2:
 
 #Create file paths
 path="..\\..\\project1\\build-Project1-Desktop_Qt_5_13_0_MinGW_64_bit-Debug\\output"
-path2="..\main"
+path2="..\\..\\project1\\build-Project1-Desktop_Qt_5_13_0_MinGW_64_bit-Debug\\time"
 maxerrors = list()
 #Create file names
 plt.close('all')
@@ -65,8 +68,10 @@ def plot_solution():
         read_files[i].close()
 
 def relative_error():
+    #Create values for the x axis.
     for i in range(n):
         x_val.append(np.log10((pow(10,i+1)+2)))
+    #Plots and configs of plot
     plt.plot(x_val,Errors,'ro-')
     plt.title("Relative error")
     plt.grid(1)
@@ -74,8 +79,18 @@ def relative_error():
     plt.ylabel('$h(\epsilon)$')
     plt.savefig('../../Latex/img/relative_error.png',dpi=199)
 
-        
-relative_error()
+
+def timing():
+    #Prints out the mean times and the standard deviations.
+    for i in range(n):
+        time = np.loadtxt(
+        path2+"-alg-%d-n=%d.txt"%(alg,pow(10,i+1)), unpack=True)
+        time=time*pow(10,-9)
+        mean_time=np.mean(time)
+        mean_time=round(mean_time,10)
+        std=round(np.std(time),10)
+        print("Mean is ", mean_time, " and std is ", std )
+
             
         
         

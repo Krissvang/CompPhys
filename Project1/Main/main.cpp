@@ -5,15 +5,19 @@
 #include <string>
 #include <chrono>
 #include <armadillo>
-// use namespace for output and input
+// use namespace and armadillo for output and input
 using namespace std;
 using namespace arma;
 // object for output files
 ofstream ofile;
-// Functions used
-int write_out=0;
-int relative_error_write=1;
 
+//Constants depending on weather the program is going to performe
+// certain actions. If 1 it will run, if 0 it will not.
+int write_out = 0;
+int relative_error_write = 0;
+int take_time = 1;
+
+// Functions used
 inline double f(double x){return 100.0*exp(-10.0*x);
 }
 inline double exact(double x) {return 1.0-(1-exp(-10))*x-exp(-10*x);}
@@ -55,7 +59,6 @@ double * t2(double* a, double *d, double *d2, double* solution, double* g,int n)
                 solution[n-i+1]=(g[n-i]+solution[n+2-i])/d2[n-i];
 
             }
-
         }
         else {
             //Forward substitution
@@ -77,6 +80,7 @@ double * t2(double* a, double *d, double *d2, double* solution, double* g,int n)
 
 //Armadillo LU decomposition
 double * t3(double* a, double * b, double *d, double *solution, double* g, unsigned int n){
+    //Create matrix
     Mat<double> A(n,n,fill::zeros);
     for (unsigned int i = 0; i < n; ++i) {
         A(i,i)=d[i];
@@ -85,6 +89,7 @@ double * t3(double* a, double * b, double *d, double *solution, double* g, unsig
         A(i,i+1)=a[i];
         A(i+1,i)=b[i];
     }
+    //Create the L and U matrices
     Mat<double> L, U;
     lu(L, U, A);
     double * y = new double [n];
@@ -115,6 +120,7 @@ double * t3(double* a, double * b, double *d, double *solution, double* g, unsig
 int main(int argc, char *argv[]){
   int exponent;
   string filename;
+
     // We read also the basic name for the output file and the highest power of 10^n we want
     if( argc <= 1 ){
           cout << "Bad Usage: " << argv[0] <<
@@ -128,7 +134,8 @@ int main(int argc, char *argv[]){
     // Loop over powers of 10
     for (int i = 1; i <= exponent; i++){
       int  n = (int) pow(10.0,i);
-      // Declare new file name
+      // Declare new file names
+      string time_taken = "time";
       string fileout = filename;
       fileout.append("-");
       // Convert the power 10^i to a string
@@ -138,49 +145,93 @@ int main(int argc, char *argv[]){
       double h = 1.0/(n+1);
       double hh = h*h;
 
-      // Set up arrays for the simple case
+      // Set up arrays for the program
       double *d = new double [n]; double *g = new double [n]; double *a = new double [n-1];
       double *b = new double [n-1]; double *d2 = new double [n];
       double *solution = new double [n+2]; double *x = new double[n+2];
-      // Quick setup of updated diagonal elements and value of
+      // Set boundary conditions
       solution[0] = solution[n+1] = 0.0;
-
+      //Create value of position
       for (int i = 0; i <= n+1; i++){
           x[i]= i*h;
       }
-
+      // Make "matrix" elements for our problem
       for (int i = 0; i < n; i++) {
-          d[i] = 2;             // We get that d[0]=d_1
+          d[i] = 2;             // We get that d[0]=d_1 in the mathematical sense
           g[i] = hh*f(x[i+1]);  // We get that g[0]=g_1
           d2[i]=(double)(i+2)/(i+1);
       };
-
       for (int i=0; i < n-1; i++) {
           a[i]=-1;
           b[i]=-1;
       }
+      //Runs General algorithm
       if(atoi(argv[3])==0){
-        auto start=chrono::steady_clock::now();
-        solution=t1(a,b,d,solution,g,n);
-        auto finish = chrono::steady_clock::now();
-        cout<<"When n = " << n << ", time used for general algorithm is = "<< chrono::duration_cast<chrono::nanoseconds>(finish - start).count()  << endl;
-        fileout.append("alg-0-n=");
+          //Takes time if take_time = 1 and writes to time_taken file
+          if(take_time==1){
+              time_taken.append("-alg-0-n=");
+              time_taken.append(argument);
+              time_taken.append(".txt");
+              ofile.open(time_taken);
+              for (int i = 0; i < 10; ++i) {
+                  auto start=chrono::steady_clock::now();
+                  solution=t1(a,b,d,solution,g,n);
+                  auto finish = chrono::steady_clock::now();
+                  auto time=chrono::duration_cast<chrono::nanoseconds>(finish - start).count();
+                  ofile << setw(20) << setprecision(8) << time <<endl;
+              }
+            ofile.close();
+            fileout.append("alg-0-n=");}
+          else {
+              solution=t1(a,b,d,solution,g,n);
+              fileout.append("alg-0-n=");}
       }
+        //Runs specialize algorithm
       else if (atoi(argv[3])==1) {
-        auto start = chrono::steady_clock::now();
-        solution=t2(a,d,d2,solution,g,n);
-        auto finish = chrono::steady_clock::now();
-        cout <<"When n = "<< n << ", time used for specialized algorithm is " << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() << endl;
-        fileout.append("alg-1-n=");
+          //Takes time if take_time = 1 and writes to time_taken file
+          if(take_time==1){
+              time_taken.append("-alg-1-n=");
+              time_taken.append(argument);
+              time_taken.append(".txt");
+              ofile.open(time_taken);
+              for (int i = 0; i < 10; ++i) {
+                  auto start=chrono::steady_clock::now();
+                  solution=t2(a,b,d,solution,g,n);
+                  auto finish = chrono::steady_clock::now();
+                  auto time=chrono::duration_cast<chrono::nanoseconds>(finish - start).count();
+                  ofile << setw(20) << setprecision(8) << time <<endl;
+              }
+            ofile.close();
+            fileout.append("alg-1-n=");}
+          else {
+              solution=t2(a,b,d,solution,g,n);
+              fileout.append("alg-1-n=");}
       }
+
+      //Runs LU decomposition
       else if (atoi(argv[3])==2) {
-          auto start = chrono::steady_clock::now();
-          solution=t3(a,b,d,solution,g,n);
-          auto finish = chrono::steady_clock::now();
-          cout << "When n = "<< n << ", time used for LU algorighm is " << chrono::duration_cast<chrono::nanoseconds>(finish - start).count()  << endl;
-          fileout.append("alg-2-n=");
-      }
+          //Takes time if take_time = 1 and writes to time_taken file
+          if(take_time==1){
+            time_taken.append("-alg-2-n=");
+            time_taken.append(argument);
+            time_taken.append(".txt");
+            ofile.open(time_taken);
+            for (int i = 0; i < 10; ++i) {
+                auto start=chrono::steady_clock::now();
+                solution=t3(a,b,d,solution,g,n);
+                auto finish = chrono::steady_clock::now();
+                auto time=chrono::duration_cast<chrono::nanoseconds>(finish - start).count();
+                ofile << setw(20) << setprecision(8) << time <<endl;
+            }
+          ofile.close();
+          fileout.append("alg-1-n=");}
+        else {
+            solution=t3(a,b,d,solution,g,n);
+            fileout.append("alg-1-n=");}
+    }
+
       else{
+          //If no third argument this is written out in console
           cout << "Please choose a algorithm to run. Choose with the third command line argument."<<endl;
           cout << "0 = General tridiagonal matrix set of linear equations."<<endl;
           cout << "1 = Specialized tridiagonal matrix set of linear equations."<<endl;
@@ -188,12 +239,13 @@ int main(int argc, char *argv[]){
           exit(0);
       }
       //exact
+      //Sets filename
       fileout.append(argument);
       fileout.append(".txt");
+      //Writes out the different values in a file.
       if(write_out==1){
           ofile.open(fileout);
           ofile << setiosflags(ios::showpoint | ios::uppercase);
-          //      ofile << "       x:             approx:          exact:       relative error" << endl;
           for (int i = 0; i < n+1;i++) {
         double xval = x[i];
          double RelativeError = fabs((exact(xval)-solution[i])/exact(xval));
@@ -204,6 +256,7 @@ int main(int argc, char *argv[]){
           }
           ofile.close();
        }
+      //Writes out relative_error in a file.
       if(relative_error_write==1) {
             double MaxError=-100;
             double* p1=&MaxError;

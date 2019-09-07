@@ -209,6 +209,10 @@ INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
 INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
 INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.cfg
 INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/float/float.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/float/float.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/geometry/geometry.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/geometry/geometry.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.aux
@@ -264,10 +268,10 @@ INPUT c:/texlive/2018/texmf-dist/tex/latex/microtype/mt-msb.cfg
 INPUT c:/texlive/2018/texmf-dist/tex/latex/microtype/mt-msb.cfg
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
-INPUT c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
+INPUT c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/./img/alg-0-n10plot.png
 INPUT ./img/alg-0-n10plot.png
 INPUT ./img/alg-0-n10plot.png
@@ -277,6 +281,9 @@ INPUT ./img/alg-0-n100plot.png
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/./img/alg-0-n1000plot.png
 INPUT ./img/alg-0-n1000plot.png
 INPUT ./img/alg-0-n1000plot.png
+INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/./img/relative_error.png
+INPUT ./img/relative_error.png
+INPUT ./img/relative_error.png
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.aux
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.out

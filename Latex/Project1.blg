@@ -1,15 +1,15 @@
 [0] Config.pm:302> INFO - This is Biber 2.11
 [0] Config.pm:305> INFO - Logfile is 'Project1.blg'
-[48] biber-MSWIN32:313> INFO - === 
-[101] Biber.pm:371> INFO - Reading 'Project1.bcf'
-[205] Biber.pm:857> INFO - Found 1 citekeys in bib section 0
-[221] Biber.pm:3976> INFO - Processing section 0
-[240] Biber.pm:4136> INFO - Looking for bibtex format file 'refrences.bib' for section 0
-[250] bibtex.pm:1500> INFO - LaTeX decoding ...
-[260] bibtex.pm:1316> INFO - Found BibTeX data source 'refrences.bib'
-[284] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[284] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[284] Biber.pm:3804> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[284] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
-[287] bbl.pm:617> INFO - Writing 'Project1.bbl' with encoding 'UTF-8'
-[288] bbl.pm:720> INFO - Output to Project1.bbl
+[63] biber-MSWIN32:313> INFO - === 
+[116] Biber.pm:371> INFO - Reading 'Project1.bcf'
+[339] Biber.pm:857> INFO - Found 1 citekeys in bib section 0
+[358] Biber.pm:3976> INFO - Processing section 0
+[379] Biber.pm:4136> INFO - Looking for bibtex format file 'refrences.bib' for section 0
+[386] bibtex.pm:1500> INFO - LaTeX decoding ...
+[393] bibtex.pm:1316> INFO - Found BibTeX data source 'refrences.bib'
+[462] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[462] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[462] Biber.pm:3804> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[462] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
+[465] bbl.pm:617> INFO - Writing 'Project1.bbl' with encoding 'UTF-8'
+[466] bbl.pm:720> INFO - Output to Project1.bbl

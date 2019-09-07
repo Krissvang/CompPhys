@@ -12,6 +12,16 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{biblatex}
+\usepackage{float}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=25mm,
+ top=20mm,
+ }
+
+
 
 \addbibresource{refrences.bib}
 
@@ -54,7 +64,7 @@ with Dirichlet boundary conditions reads
 We will use the source term $f(x)=100e^{-10x}$. This gives the particular solution 
 $u(x)=1-(1-e^{-10})x-e^{-10x}$. We will compare our numerical solution to this exact solution.
 
-We will also compute the relative error for our algorithms. The relative error is defined as 
+We will also compute the relative error for our algorithms in order to see how accurate they are. The relative error is defined as 
 $$ \epsilon=\log{\left|\frac{u_{numerical}-u_{exact}}{u_{exact}}\right|}.$$
 
 \section{Numerical methods}
@@ -205,7 +215,9 @@ But we can make a even better algorithm if the diagonal elements are $2$ and the
 \end{center}
  We see that since we have precalculated the diagonal elements and used that the off diagonal element is -1, the number of FLOPS is only $4n$.
 
-
+\subsection{LU decomposition}
+The LU-decomposition decomposes the matrix $\mathbf{A}$ into the product of a (L)ower triangular and a (U)pper triangular matrix, i.e. $\mathbf{A}=\mathbf{L}\mathbf{U}$. Hence in order to solve the equation $\mathbf{A}\mathbf{x}=\mathbf{y}$ we get $$\mathbf{A}\mathbf{x}=\mathbf{L}\mathbf{U}\mathbf{x}=\mathbf{L}\mathbf{z}=\mathbf{y} $$
+Hence we need to solve $\mathbf{L}\mathbf{z}=\mathbf{y}$ and $\mathbf{U}\mathbf{x}=\mathbf{z}$. Since $\mathbf{L}$ and $\mathbf{U}$ are triangular matrices we only need to do a forward substitution and a backward substitution. 
 
 \section{Program structure}
 
@@ -213,23 +225,86 @@ But we can make a even better algorithm if the diagonal elements are $2$ and the
 
 \section{results}
 
-The general algorithm was programed using c++ and the solution for matrix size n=10, 100 and 1000 was compared to the exact solution and plotted using python as shown below.
+By running the general algorithm for matrixes sized n=10, 100 and 1000, and comparing the solution to the exact solution we get the following plots.
 
-  \begin{figure}[h]
-    \centering 
-    \includegraphics[scale=0.7]{alg-0-n10plot.png}
-  \end{figure}
-  \begin{figure}
-    \centering
-    \includegraphics[scale=0.7]{alg-0-n100plot.png}
-  \end{figure}
-  \begin{figure}
-    \centering
-    \includegraphics[scale=0.7]{alg-0-n1000plot.png}
-  \end{figure}
+\begin{figure}[H]
+  \center
+  \includegraphics[scale=0.5]{alg-0-n10plot.png}
+  \caption{General algorithm for n=10 plot points and the exact solution on the interval $x\in (0,1)$.}
+\end{figure}
+\begin{figure}[H]
+  \center
+  \includegraphics[scale=0.5]{alg-0-n100plot.png}  \caption{General algorithm for n=100 plot points and the exact solution on the interval $x\in (0,1)$.}
+\end{figure}
+\begin{figure}[H]
+  \center
+  \includegraphics[scale=0.5]{alg-0-n1000plot.png}
+  \caption{General algorithm for n=1000 plot points and the exact solution on the interval $x\in (0,1)$.}
+\end{figure}
+
+\captionof{table}{Mean time of the different algorithms run 10 times and their standard deviasions (STD)}
+
+\begin{tabular}{||c|c|c|c||}
+  \hline\hline 
+    & \multicolumn{3}{|c||}{Mean time $\pm$ STD}\\
+  \hline
+  Number of gridpoints & General algorithm  & Specialized algorithm & LU decomposition \\
+  \hline
+  10 & $1,4\times 10^{-6}$ s $\pm 1\times 10^{-6}$ s& 
+  $8,4\times 10^{-7}$ s $\pm 2 \times 10^{-7}$ s &  
+  $5,7\times 10^{-4}$ s $\pm 2 \times 10^{-3}$ s \\
+  \hline
+  $10^2$ & $5,1\times 10^{-6}$ s $\pm 5 \times 10^{-7}$ s &
+  $5,2\times 10^{-6}$ s $\pm 3 \times 10^{-7}$ s &
+  $9\times 1,0^{-3}$ s $\pm 8 \times 10^{-4}$ s \\
+  \hline
+  $10^3$ & $4,7 \times 10^{-5}$ s $\pm 4 \times 10^{-6}$ s &
+  $4,9\times 10^{-5}$ s $\pm 1 \times 10^{-6}$ s &
+  $7,1\times 10^{-2}$ s $\pm 1\times 10^{-3}$ s \\
+  \hline
+  $10^4$ & $4,4 \times 10^{-4}$ s $\pm 7 \times 10^{-5}$ s &
+  $5,0\times 10^{-4}$ s $\pm 4,3 \times 10^{-5}$ s &
+  $11$ s $\pm 2$ s \\
+  \hline 
+  $10^5$ & $4,4 \times 10^{-3}$ s $\pm 3 \times 10^{-4}$ s&
+  $4,9\times 10^{-3}$ s $\pm 6 \times 10^{-4}$ s & N/A\\
+  \hline
+  $10^6$ &$2,4 \times 10^{-2}$ s $\pm 4 \times 10^{-3}$ s &
+  $3\times 10^{2}$ s $\pm 1 \times 10^{-2}$ s & N/A \\
+  \hline\hline  
+\end{tabular}
 
 
-We see that for the general solution $n=10$ is a bad approximation, this is because the step length is too long, i.e. too few grid points, which makes the approximation of the second derivative bad.
+
+
+\begin{center}
+  \captionof{table}{Maximum error of the specialized algorithm for n=10 to n=$10^7$.}
+  \begin{tabular}{||c|c||}
+
+    \hline\hline Number of gridpoints & Max relative error \\
+    \hline
+    10 & -1.2 \\
+    \hline
+    $10^2$ & -3.1 \\
+    \hline
+    $10^3$ & -5.1 \\ 
+    \hline
+    $10^4$ & -7.1 \\
+    \hline
+    $10^5$ & -9.1 \\ 
+    \hline
+    $10^6$ & -10.8\\
+    \hline
+    $10^7$ & -10.8\\
+    \hline\hline
+    
+  \end{tabular}
+\end{center}
+
+\begin{figure}[H]
+  \centering  
+  \includegraphics[scale=0.5]{relative_error.png}
+\end{figure}
 
 \section{Summary}
 
