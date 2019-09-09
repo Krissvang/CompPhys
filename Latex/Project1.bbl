@@ -68,6 +68,32 @@
       \field{title}{Elliptic Problems in Linear Differential Equations over a Network}
       \field{year}{1949}
     \endentry
+    \entry{kristian}{online}{}
+      \name{author}{1}{}{%
+        {{hash=cde299a2949c219f2e01ca8c2655348b}{%
+           family={Vangsnes},
+           familyi={V\bibinitperiod},
+           given={Kristian\bibnamedelima Gjestad},
+           giveni={K\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{cde299a2949c219f2e01ca8c2655348b}
+      \strng{fullhash}{cde299a2949c219f2e01ca8c2655348b}
+      \strng{bibnamehash}{cde299a2949c219f2e01ca8c2655348b}
+      \strng{authorbibnamehash}{cde299a2949c219f2e01ca8c2655348b}
+      \strng{authornamehash}{cde299a2949c219f2e01ca8c2655348b}
+      \strng{authorfullhash}{cde299a2949c219f2e01ca8c2655348b}
+      \field{sortinit}{V}
+      \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Github repository}
+      \verb{urlraw}
+      \verb https://github.com/krissvang/CompPhys
+      \endverb
+      \verb{url}
+      \verb https://github.com/krissvang/CompPhys
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

@@ -7,9 +7,9 @@ def f(t):
     return 1-(1-np.exp(-10))*t-np.exp(-10.0*t)
 
 #Choose the number of gridpoints by gridpoints = 10^n
-n=6
+n=4
 #Choose which algorithm to run, 0=general, 1 =specialized and 2)=LU.
-alg=1
+alg=2
 Title=""
 #Lists for names
 filenames=[]
@@ -73,7 +73,7 @@ def relative_error():
         x_val.append(np.log10((pow(10,i+1)+2)))
     #Plots and configs of plot
     plt.plot(x_val,Errors,'ro-')
-    plt.title("Relative error")
+    plt.title("Max relative error")
     plt.grid(1)
     plt.xlabel('$\log{(n)}$')
     plt.ylabel('$\epsilon$')
@@ -90,10 +90,7 @@ def timing():
         mean_time=round(mean_time,10)
         std=round(np.std(time),10)
         print("Mean is ", mean_time, " and std is ", std )
-
-            
 timing()
-        
         
         
         

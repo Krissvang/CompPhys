@@ -1974,8 +1974,10 @@
     <bcf:datasource type="file" datatype="bibtex">refrences.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">thomas</bcf:citekey>
+    <bcf:citekey order="1">kristian</bcf:citekey>
     <bcf:citekey order="2">morten</bcf:citekey>
+    <bcf:citekey order="3">thomas</bcf:citekey>
+    <bcf:citekey order="4">morten</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

@@ -11,11 +11,11 @@ using namespace arma;
 // object for output files
 ofstream ofile;
 
-//Constants depending on weather the program is going to performe
+//Constants depending on Iather the program is going to performe
 // certain actions. If 1 it will run, if 0 it will not.
 int write_out = 0;
-int relative_error_write = 1;
-int take_time = 0;
+int relative_error_write = 0;
+int take_time = 1;
 
 // Functions used
 inline double f(double x){return 100.0*exp(-10.0*x);
@@ -45,7 +45,7 @@ double * t2(double* a, double *d, double *d2, double* solution, double* g,int n)
     int e = a[0];
     int ee=e*e;
 
-    //We have a special algorithm when the off diagonal
+    //I have a special algorithm when the off diagonal
     // elements are -1 and the diagonal elements are 2.
         if(e==-1 && d[0]==2.0){
             //Forward substitution
@@ -92,6 +92,19 @@ double * t3(double* a, double * b, double *d, double *solution, double* g, unsig
     //Create the L and U matrices
     Mat<double> L, U;
     lu(L, U, A);
+
+    vec y(n);
+
+    for (int i = 0; i < n; i++) {
+        y(i)=g[i];
+
+    }
+    vec z = solve(L,y);
+    vec x = solve(U,z);
+    for (int i = 0; i < n; i++) {
+        solution[i]=x[i];
+    }
+    /*
     double * y = new double [n];
 
     //Solving Ly=g
@@ -113,6 +126,7 @@ double * t3(double* a, double * b, double *d, double *solution, double* g, unsig
         solution[n-i+1]/=U(n-i,n-i);
     }
     delete [] y;
+    */
     return solution;
 }
 
@@ -121,17 +135,17 @@ int main(int argc, char *argv[]){
   int exponent;
   string filename;
 
-    // We read also the basic name for the output file and the highest power of 10^n we want
+    // I read also the basic name for the output file and the highest poIr of 10^n I want
     if( argc <= 1 ){
           cout << "Bad Usage: " << argv[0] <<
-              " read also file name on same line and max power 10^n" << endl;
+              " read also file name on same line and max poIr 10^n" << endl;
           exit(1);
     }
         else{
         filename = argv[1]; // first command line argument after name of program
         exponent = atoi(argv[2]);
     }
-    // Loop over powers of 10
+    // Loop over poIrs of 10
 
     for (int i = 1; i <= exponent; i++){
       int  n = (int) pow(10.0,i);
@@ -139,7 +153,7 @@ int main(int argc, char *argv[]){
       string time_taken = "time";
       string fileout = filename;
       fileout.append("-");
-      // Convert the power 10^i to a string
+      // Convert the poIr 10^i to a string
       string argument = to_string(int(pow(10,i)));
 
 
@@ -158,8 +172,8 @@ int main(int argc, char *argv[]){
       }
       // Make "matrix" elements for our problem
       for (int i = 0; i < n; i++) {
-          d[i] = 2;             // We get that d[0]=d_1 in the mathematical sense
-          g[i] = hh*f(x[i+1]);  // We get that g[0]=g_1
+          d[i] = 2;             // I get that d[0]=d_1 in the mathematical sense
+          g[i] = hh*f(x[i+1]);  // I get that g[0]=g_1
           d2[i]=(double)(i+2)/(i+1);
       };
       for (int i=0; i < n-1; i++) {
@@ -248,6 +262,7 @@ int main(int argc, char *argv[]){
       fileout.append(".txt");
       //Writes out the different values in a file.
       if(write_out==1){
+
           ofile.open(fileout);
           ofile << setiosflags(ios::showpoint | ios::uppercase);
           for (int i = 0; i < n+1;i++) {
