@@ -19,6 +19,33 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{morten}{online}{}
+      \name{author}{1}{}{%
+        {{hash=f1f1ee5e424a0bb746b54acd9e6851cf}{%
+           family={Hjorth-Jensen},
+           familyi={H\bibinithyphendelim J\bibinitperiod},
+           given={Morten},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{fullhash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{bibnamehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{authorbibnamehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{authornamehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{authorfullhash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Computational Physics, lecture notes fall 2015}
+      \field{year}{2015}
+      \verb{urlraw}
+      \verb https://github.com/CompPhysics/ComputationalPhysics/blob/master/doc/Lectures/lectures2015.pdf
+      \endverb
+      \verb{url}
+      \verb https://github.com/CompPhysics/ComputationalPhysics/blob/master/doc/Lectures/lectures2015.pdf
+      \endverb
+    \endentry
     \entry{thomas}{article}{}
       \name{author}{1}{}{%
         {{hash=b6324054745e289b0fda0adc685508a8}{%

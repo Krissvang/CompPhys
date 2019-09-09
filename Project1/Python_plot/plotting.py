@@ -7,9 +7,9 @@ def f(t):
     return 1-(1-np.exp(-10))*t-np.exp(-10.0*t)
 
 #Choose the number of gridpoints by gridpoints = 10^n
-n=4
+n=6
 #Choose which algorithm to run, 0=general, 1 =specialized and 2)=LU.
-alg=2
+alg=1
 Title=""
 #Lists for names
 filenames=[]
@@ -69,14 +69,14 @@ def plot_solution():
 
 def relative_error():
     #Create values for the x axis.
-    for i in range(n):
+    for i in range(7):
         x_val.append(np.log10((pow(10,i+1)+2)))
     #Plots and configs of plot
     plt.plot(x_val,Errors,'ro-')
     plt.title("Relative error")
     plt.grid(1)
-    plt.xlabel('$\epsilon$')
-    plt.ylabel('$h(\epsilon)$')
+    plt.xlabel('$\log{(n)}$')
+    plt.ylabel('$\epsilon$')
     plt.savefig('../../Latex/img/relative_error.png',dpi=199)
 
 
@@ -92,7 +92,7 @@ def timing():
         print("Mean is ", mean_time, " and std is ", std )
 
             
-        
+timing()
         
         
         

@@ -14,6 +14,7 @@
 \usepackage{biblatex}
 \usepackage{float}
 \usepackage{geometry}
+\usepackage{hyperref}
  \geometry{
  a4paper,
  total={170mm,257mm},
@@ -40,6 +41,8 @@
 
 
   \text{Date: 9. September 2019}
+
+  Git hub repository: \href{https://github.com/Krissvang/CompPhys}{Github.com/Krissvang/CompPhys}
 \end{center}
 \begin{abstract}
   abstract 
@@ -97,8 +100,11 @@ We see that $u''(x)=\frac{u(x+h)+u(x-h)-2u(x)}{h^2}-O(h^4)$. Hence for the appro
  \end{bmatrix}
  $$
 
- The relative error is computed by $$ \epsilon=\log{\left|\frac{v_{i}-u_{i}}{u_{i}}\right|}.$$
-
+ The relative error is computed by 
+ \begin{equation}\label{eq:rel_error}
+  \epsilon=\log{\left|\frac{v_{i}-u_{i}}{u_{i}}\right|}
+ \end{equation} 
+  
 
  \subsection{General algorithm}
  The general algorithm to solve a set of equation on a tridiagonal form is done by Gaussian elimination, and is called the Thomas algorithm \cite{thomas}.  The algorithm On matrix form the problem is $\mathbf{A}\mathbf{v}=\mathbf{g}$. Where $\mathbf{v}$ contains the unknowns $v_i$. In our case the unknowns are the solution to the Poisson equation at $x_i=ih$, i.e. $v(x_i)=v_i$.
@@ -151,7 +157,7 @@ When we start to count from 0 to $n-1$ the algorithm goes as follows:
     \hline\hline
     Forward substitution \\
     \textbf{for} $i=0,1,2,...,n-1$\\
-      $d_{i+1}-=a_i*b_i/d_i$ \\
+      $d_{i+1}-=a_ib_i/d_i$ \\
       $g_{i+1}-=a_ig_i/d_i$ \\
       \textbf{End loop} \\
       Backward substitution \\
@@ -216,11 +222,19 @@ But we can make a even better algorithm if the diagonal elements are $2$ and the
  We see that since we have precalculated the diagonal elements and used that the off diagonal element is -1, the number of FLOPS is only $4n$.
 
 \subsection{LU decomposition}
-The LU-decomposition decomposes the matrix $\mathbf{A}$ into the product of a (L)ower triangular and a (U)pper triangular matrix, i.e. $\mathbf{A}=\mathbf{L}\mathbf{U}$. Hence in order to solve the equation $\mathbf{A}\mathbf{x}=\mathbf{y}$ we get $$\mathbf{A}\mathbf{x}=\mathbf{L}\mathbf{U}\mathbf{x}=\mathbf{L}\mathbf{z}=\mathbf{y} $$
+The LU-decomposition decomposes the matrix $\mathbf{A}$ into the product of a (L)ower triangular and a (U)pper triangular matrix, i.e. $\mathbf{A}=\mathbf{L}\mathbf{U}$. This is done in Morten Hjort-Jensen's lecture notes \cite{morten}.Hence in order to solve the equation $\mathbf{A}\mathbf{x}=\mathbf{y}$ we get $$\mathbf{A}\mathbf{x}=\mathbf{L}\mathbf{U}\mathbf{x}=\mathbf{L}\mathbf{z}=\mathbf{y} $$
 Hence we need to solve $\mathbf{L}\mathbf{z}=\mathbf{y}$ and $\mathbf{U}\mathbf{x}=\mathbf{z}$. Since $\mathbf{L}$ and $\mathbf{U}$ are triangular matrices we only need to do a forward substitution and a backward substitution. 
 
-\section{Program structure}
+The LU decomposition does $\frac{2}{3}n^3$ FLOPS, to solve the equation $\mathbf{L}\mathbf{U}\mathbf{x}=\mathbf{y}$ by Gaussian elimination it takes again $~O(n^3)$ FLOPS, hence the LU decomposition does $~O(n^3)$ FLOPS. Which will be a lot more than $O(n)$ for $n>>1$.
 
+\section{Program structure}
+The main program used for the computations is written in c++ and compiled using QT Creator. The program is structured in such a way that the user has to choose 3 command line arguments. The first argument is the name of the output file, the second decides the number of gridpoints, where the number of gridpoints is ten to the power of the input argument. If one chooses that the number of grid points is $10^i$ where $i$ is the input argument, then the program will compute the chosen algorithm for $10$, $10^2$ up to $10^i$ . The third argument is which algorithm will be used. Where the general algorithm corresponds to the input 0, the specialized algorithm corresponds to the input 1 and the LU decomposition corresponds to the input 2. In the program there are also three values the user can set to decide weather the program will (1) write an output file with the solution calculated by the algorithm, (2) write the maximum relative errors in the console, or (3) write an output file with the time used to run the chosen algorithm 10 times. 
+
+If we choose that the program shall write an output file with the solution, we set the "write\_out" variable equal 1 and we can run for example "main.exe output 3 1", the program will then create output files called "output-alg-1-n=10","output-alg-1-n=100" and "output-alg-1-n=1000". Where the output in the files are columns of calculated values from the specialized algorithm. The first column is the x-values from 0 to 1 with step-length defined by $n$, the second column is solution calculated from the algorithm, the third column is the exact value calculated using the exact solution and the fourth column is the logarithm (base 10) of the relative error. 
+
+We have also used a python program called "plotting.py" to plot the graphs used in the result and to calculate the mean time and the standard deviation of the mean.
+
+We tried to make the python program run such that we could run the c++ program from python, but this became a problem because we use windows and Spyder as the integrated development environment (IDE)for python. We could not compile and run the program through the windows terminal using the "os" package. If we used the Linux subsystem we could run the python program and it would work, but we would like to use Spyder, hence the programs have to be run separately. 
 
 
 \section{results}
@@ -231,18 +245,28 @@ By running the general algorithm for matrixes sized n=10, 100 and 1000, and comp
   \center
   \includegraphics[scale=0.5]{alg-0-n10plot.png}
   \caption{General algorithm for n=10 plot points and the exact solution on the interval $x\in (0,1)$.}
+  \label{fig:plotn10}
 \end{figure}
 \begin{figure}[H]
   \center
   \includegraphics[scale=0.5]{alg-0-n100plot.png}  \caption{General algorithm for n=100 plot points and the exact solution on the interval $x\in (0,1)$.}
+  \label{fig:plotn100}
 \end{figure}
 \begin{figure}[H]
   \center
   \includegraphics[scale=0.5]{alg-0-n1000plot.png}
   \caption{General algorithm for n=1000 plot points and the exact solution on the interval $x\in (0,1)$.}
+  \label{fig:plotn1000}
 \end{figure}
 
-\captionof{table}{Mean time of the different algorithms run 10 times and their standard deviasions (STD)}
+We see that for n=10, the difference between the exact solution and the numerical solution at the points $x_i=ih$ is big compared to the numerical solution when $n=100$ and $n=1000$. This is because our approximation uses the Taylor expansion of $u(x_i\pm h)$ and we supposes that the terms $h^2~0$, but for a step length of $h=\frac{1}{11}$. This means that $h^2$ is not small enough for us to suppose it is zero.
+
+It is also worth noting that since we use a static step length, i.e. it is a fixed length, we do not care about the steepness of the slope, this can cause errors. We see that for $n=100$, the length between the plotted solution at $x_i$ when $x_i\in (0,0.2)$ is big, while when $x_i\in (0.2,1)$ the length between the plotted solution is small. A way to fix this is to take into account the first derivative of $u(x)$ and make the step length dependent on it.
+
+By running the different algorithms 10 times for different number of gridpoints we get the following mean times.
+\hfill\break
+
+\captionof{table}{Mean time of the different algorithms run 10 times and their standard deviations (STD)}
 
 \begin{tabular}{||c|c|c|c||}
   \hline\hline 
@@ -251,34 +275,45 @@ By running the general algorithm for matrixes sized n=10, 100 and 1000, and comp
   Number of gridpoints & General algorithm  & Specialized algorithm & LU decomposition \\
   \hline
   10 & $1,4\times 10^{-6}$ s $\pm 1\times 10^{-6}$ s& 
-  $8,4\times 10^{-7}$ s $\pm 2 \times 10^{-7}$ s &  
+  $3,0\times 10^{-7}$ s $\pm 1 \times 10^{-7}$ s &  
   $5,7\times 10^{-4}$ s $\pm 2 \times 10^{-3}$ s \\
   \hline
   $10^2$ & $5,1\times 10^{-6}$ s $\pm 5 \times 10^{-7}$ s &
-  $5,2\times 10^{-6}$ s $\pm 3 \times 10^{-7}$ s &
+  $2,31\times 10^{-6}$ s $\pm 8 \times 10^{-8}$ s &
   $9\times 1,0^{-3}$ s $\pm 8 \times 10^{-4}$ s \\
   \hline
   $10^3$ & $4,7 \times 10^{-5}$ s $\pm 4 \times 10^{-6}$ s &
-  $4,9\times 10^{-5}$ s $\pm 1 \times 10^{-6}$ s &
+  $2,27\times 10^{-5}$ s $\pm 3 \times 10^{-7}$ s &
   $7,1\times 10^{-2}$ s $\pm 1\times 10^{-3}$ s \\
   \hline
   $10^4$ & $4,4 \times 10^{-4}$ s $\pm 7 \times 10^{-5}$ s &
-  $5,0\times 10^{-4}$ s $\pm 4,3 \times 10^{-5}$ s &
+  $2,16\times 10^{-4}$ s $\pm 8 \times 10^{-6}$ s &
   $11$ s $\pm 2$ s \\
   \hline 
   $10^5$ & $4,4 \times 10^{-3}$ s $\pm 3 \times 10^{-4}$ s&
-  $4,9\times 10^{-3}$ s $\pm 6 \times 10^{-4}$ s & N/A\\
+  $2,2\times 10^{-3}$ s $\pm 2 \times 10^{-4}$ s & N/A\\
   \hline
   $10^6$ &$2,4 \times 10^{-2}$ s $\pm 4 \times 10^{-3}$ s &
-  $3\times 10^{2}$ s $\pm 1 \times 10^{-2}$ s & N/A \\
+  $2,1\times 10^{-2}$ s $\pm 1 \times 10^{-3}$ s & N/A \\
   \hline\hline  
 \end{tabular}
 
+\hfill\break
 
+We see the expected result that the specialized algorithm is faster for smaller $n$, this is because the number of FLOPS done by the specialized algorithm is half of the FLOPS the general algorithm does. We also see that the time difference becomes smaller as the number of gridpoints increases. This is because as the number of gridpoints increases we move from using fast memory, i.e. the CPU cache, over to using slow memory. When this is the case, the time it takes to write and read from memory will be the main factor of time usage, which means that the time difference should decrease.
+\hfill\break
+
+The LU decomposition which was done using the Armadillo library did also perform as expected. The general LU decomposition does $\frac{2}{3}n^3$ FLOPS, but we expect that Armadillo is optimized in such a way that it notices if the matrix used has certain symmetries, thus it might do less FLOPS. But we know that it has do reserve memory for the matrix and the vectors, hence it reserves memory for at least $n\times n$ doubles. This means $8 n\times n$ bytes of memory. This means it has to do a lot more FLOPS, which means it will perform slower. When $n=10^4$ it has to reserve at least $0,8$ GB of memory, for $n=10^5$ it would have to reserve 80 GB of memory. This is far more than any standard pc has and would crash the program or the pc.
+
+It is important to note that the time the program takes is highly environment dependent. The times given in this report is from a Microsoft Surface Pro running a Intel i5-7300U CPU at 2,60GHz. If it is done by a better or worse pc, it is expected to get better or worse times. The times is also dependent on what the operative system (OS) is doing. It is therefore important to make sure that the pc is in the same state when running the program.
+
+\break
+
+The relative error for the specialized algorithm is calculated using equation (\ref{eq:rel_error}) and is compared to the number of grid points in table (\ref{tb:error}). It is also plotted as a function of $\log{(n)}$.
 
 
 \begin{center}
-  \captionof{table}{Maximum error of the specialized algorithm for n=10 to n=$10^7$.}
+  \captionof{table}{Maximum error of the specialized algorithm for n=10 to n=$10^7$.}\label{tb:error}
   \begin{tabular}{||c|c||}
 
     \hline\hline Number of gridpoints & Max relative error \\
@@ -295,7 +330,7 @@ By running the general algorithm for matrixes sized n=10, 100 and 1000, and comp
     \hline
     $10^6$ & -10.8\\
     \hline
-    $10^7$ & -10.8\\
+    $10^7$ & -9.5\\
     \hline\hline
     
   \end{tabular}

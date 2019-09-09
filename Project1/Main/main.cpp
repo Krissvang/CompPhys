@@ -14,8 +14,8 @@ ofstream ofile;
 //Constants depending on weather the program is going to performe
 // certain actions. If 1 it will run, if 0 it will not.
 int write_out = 0;
-int relative_error_write = 0;
-int take_time = 1;
+int relative_error_write = 1;
+int take_time = 0;
 
 // Functions used
 inline double f(double x){return 100.0*exp(-10.0*x);
@@ -47,7 +47,7 @@ double * t2(double* a, double *d, double *d2, double* solution, double* g,int n)
 
     //We have a special algorithm when the off diagonal
     // elements are -1 and the diagonal elements are 2.
-        if(e==-1 && d[0]==2){
+        if(e==-1 && d[0]==2.0){
             //Forward substitution
             for (int i = 0; i < n; ++i) {
 
@@ -132,6 +132,7 @@ int main(int argc, char *argv[]){
         exponent = atoi(argv[2]);
     }
     // Loop over powers of 10
+
     for (int i = 1; i <= exponent; i++){
       int  n = (int) pow(10.0,i);
       // Declare new file names
@@ -185,6 +186,7 @@ int main(int argc, char *argv[]){
           else {
               solution=t1(a,b,d,solution,g,n);
               fileout.append("alg-0-n=");}
+
       }
         //Runs specialize algorithm
       else if (atoi(argv[3])==1) {
@@ -196,16 +198,18 @@ int main(int argc, char *argv[]){
               ofile.open(time_taken);
               for (int i = 0; i < 10; ++i) {
                   auto start=chrono::steady_clock::now();
-                  solution=t2(a,b,d,solution,g,n);
+                  solution=t2(a,d,d2,solution,g,n);
                   auto finish = chrono::steady_clock::now();
                   auto time=chrono::duration_cast<chrono::nanoseconds>(finish - start).count();
                   ofile << setw(20) << setprecision(8) << time <<endl;
+
               }
             ofile.close();
             fileout.append("alg-1-n=");}
           else {
-              solution=t2(a,b,d,solution,g,n);
+              solution=t2(a,d,d2,solution,g,n);
               fileout.append("alg-1-n=");}
+
       }
 
       //Runs LU decomposition
@@ -256,19 +260,25 @@ int main(int argc, char *argv[]){
           }
           ofile.close();
        }
-      //Writes out relative_error in a file.
+      //Writes out relative_error in a console.
       if(relative_error_write==1) {
             double MaxError=-100;
+            double x_error=0;
+            double* px=&x_error;
             double* p1=&MaxError;
             for (int i = 1; i < n; ++i) {
                 double RelativeError = log10(fabs((exact(x[i])-solution[i])/exact(x[i])));
+
                 double* p2=&RelativeError;
                 if(MaxError < RelativeError){
                     *p1=*p2;
+                    *px=x[i];
+
 
                 }
+
             }
-            cout << "Max error is: "<< MaxError << endl;
+            cout << "Max error is: "<< MaxError << " and the x value is "<<x_error << endl;
             cout<< endl;
 
 

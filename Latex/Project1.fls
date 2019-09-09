@@ -285,6 +285,8 @@ INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/./img/relativ
 INPUT ./img/relative_error.png
 INPUT ./img/relative_error.png
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.aux
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.out
 INPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.out
@@ -293,6 +295,7 @@ OUTPUT c:/Users/krist/Documents/ComputationalPhysics/Projects/Latex/Project1.run
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb
@@ -306,3 +309,4 @@ INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
