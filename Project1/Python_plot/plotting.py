@@ -90,6 +90,8 @@ def timing():
         mean_time=round(mean_time,10)
         std=round(np.std(time),10)
         print("Mean is ", mean_time, " and std is ", std )
+plot_solution()
+relative_error()
 timing()
         
         

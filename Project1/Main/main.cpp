@@ -13,9 +13,9 @@ ofstream ofile;
 
 //Constants depending on Iather the program is going to performe
 // certain actions. If 1 it will run, if 0 it will not.
-int write_out = 0;
+int write_out = 1;
 int relative_error_write = 0;
-int take_time = 1;
+int take_time = 0;
 
 // Functions used
 inline double f(double x){return 100.0*exp(-10.0*x);
@@ -57,7 +57,6 @@ double * t2(double* a, double *d, double *d2, double* solution, double* g,int n)
             solution[n]=g[n-1]/d2[n-1];
             for (int i = 2; i < n+1; ++i) {
                 solution[n-i+1]=(g[n-i]+solution[n+2-i])/d2[n-i];
-
             }
         }
         else {
@@ -71,11 +70,8 @@ double * t2(double* a, double *d, double *d2, double* solution, double* g,int n)
             for (int i = 2; i < n+1; ++i) {
                 solution[n+1-i]=(g[n-i]+solution[n+2-i])/d[n-i];
             }
-
         }
-
     return solution;
-
 }
 
 //Armadillo LU decomposition
@@ -126,14 +122,14 @@ int main(int argc, char *argv[]){
 
     for (int i = 1; i <= exponent; i++){
       int  n = (int) pow(10.0,i);
+
       // Declare new file names
       string time_taken = "time";
       string fileout = filename;
       fileout.append("-");
+
       // Convert the poIr 10^i to a string
       string argument = to_string(int(pow(10,i)));
-
-
       double h = 1.0/(n+1);
       double hh = h*h;
 
@@ -177,7 +173,6 @@ int main(int argc, char *argv[]){
           else {
               solution=t1(a,b,d,solution,g,n);
               fileout.append("alg-0-n=");}
-
       }
         //Runs specialize algorithm
       else if (atoi(argv[3])==1) {
@@ -200,7 +195,6 @@ int main(int argc, char *argv[]){
           else {
               solution=t2(a,d,d2,solution,g,n);
               fileout.append("alg-1-n=");}
-
       }
 
       //Runs LU decomposition
@@ -224,7 +218,6 @@ int main(int argc, char *argv[]){
             solution=t3(a,b,d,solution,g,n);
             fileout.append("alg-1-n=");}
     }
-
       else{
           //If no third argument this is written out in console
           cout << "Please choose a algorithm to run. Choose with the third command line argument."<<endl;
@@ -265,20 +258,12 @@ int main(int argc, char *argv[]){
                 if(MaxError < RelativeError){
                     *p1=*p2;
                     *px=x[i];
-
-
                 }
-
             }
             cout << "Max error is: "<< MaxError << " and the x value is "<<x_error << endl;
             cout<< endl;
-
-
-
       }
       delete [] x; delete [] d; delete [] g; delete [] a; delete [] solution;
     }
-
-
     return 0;
 }
