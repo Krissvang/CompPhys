@@ -104,29 +104,6 @@ double * t3(double* a, double * b, double *d, double *solution, double* g, unsig
     for (int i = 0; i < n; i++) {
         solution[i]=x[i];
     }
-    /*
-    double * y = new double [n];
-
-    //Solving Ly=g
-    y[0]=g[0]/L(0,0);
-    for (unsigned int i = 1; i < n; ++i) {
-        y[i]= g[i];
-        for (unsigned int j = 0; j < i; ++j) {
-            y[i]-=L(i,j)*y[j];
-        }
-        y[i]/=L(i,i);
-    }
-    //Solving Ux=y
-    solution[n]=y[n-1]/U(n-1,n-1);
-    for (unsigned int i = 2; i < n+1; ++i) {
-        solution[n-i+1]=y[n-i];
-        for (unsigned int j = 1; j < i; ++j) {
-            solution[n-i+1]-=U(n-i,n-j)*solution[n-j+1];
-        }
-        solution[n-i+1]/=U(n-i,n-i);
-    }
-    delete [] y;
-    */
     return solution;
 }
 

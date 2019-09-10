@@ -257,7 +257,7 @@ As mentioned I can make an even better algorithm if the diagonal elements are $2
 The LU-decomposition decomposes the matrix $\mathbf{A}$ into the product of a (L)ower triangular and a (U)pper triangular matrix, i.e. $\mathbf{A}=\mathbf{L}\mathbf{U}$. This is done in Morten Hjort-Jensen's lecture notes \cite{morten}[p.173-p.180]. In order to solve the equation $\mathbf{A}\mathbf{x}=\mathbf{y}$ I get $$\mathbf{A}\mathbf{x}=\mathbf{L}\mathbf{U}\mathbf{x}=\mathbf{L}\mathbf{z}=\mathbf{y} $$
 Hence I need to solve $\mathbf{L}\mathbf{z}=\mathbf{y}$ and $\mathbf{U}\mathbf{x}=\mathbf{z}$. Since $\mathbf{L}$ and $\mathbf{U}$ are triangular matrices I only need to do a forward substitution and a backward substitution. 
 
-The LU decomposition does $\frac{2}{3}n^3$ FLOPS, to solve the equation $\mathbf{L}\mathbf{U}\mathbf{x}=\mathbf{y}$ by Gaussian elimination it takes again $~O(n^3)$ FLOPS, hence the LU decomposition does $~O(n^3)$ FLOPS. Which will be a lot more than $O(n)$ for $n>>1$.
+The LU decomposition does $\frac{2}{3}n^3$ FLOPS, to solve the equation $\mathbf{L}\mathbf{U}\mathbf{x}=\mathbf{y}$ by Gaussian elimination it takes again $\sim O(n^3)$ FLOPS, hence the LU decomposition does $\sim O(n^3)$ FLOPS. Which will be a lot more than $O(n)$ for $n>>1$.
 
 \section{Program structure}
 The main program used for the computations is written in c++ and compiled using QT Creator. The program is structured in such a way that the user has to choose 3 command line arguments. The first argument chooses the name of the output file, the second decides the number of gridpoints, where the number of gridpoints is ten to the power of the input argument. If $i$ is the input argument, then the program will compute the algorithm for $10$, $10^2$ up to $10^i$. The third argument decides which algorithm will be used. Where the general algorithm corresponds to the input "0", the specialized algorithm corresponds to the input "1" and the LU decomposition corresponds to the input "2". In the program there are also three values the user can set to decide weather the program will (1) write an output file with the solution calculated by the algorithm, (2) write the maximum relative errors in the console, or (3) write an output file with the time used to run the chosen algorithm 10 times. 
@@ -266,12 +266,12 @@ If I choose that the program shall write an output file with the solution, I set
 
 I have also used a python program called "plotting.py" to plot the graphs used in the result and to calculate the mean time and the standard deviation of the mean.
 
-I tried to make the python program run such that I could run the c++ program from python, but this became a problem because I use windows and Spyder as the integrated development environment (IDE)for python. I could not compile and run the program through the windows terminal using the "os" package. If I used the Linux subsystem I could run the python program and it would work, but I would like to use Spyder, hence the programs have to be run separately. 
+I tried to make the python program run such that I could run the c++ program from python, but this became a problem because I use windows and Spyder as the integrated development environment (IDE) for python. I could not compile and run the program through the windows terminal using the "os" package. If I used the Linux subsystem I could run the python program and it would work, but I would like to use Spyder, hence the programs have to be run separately. 
 
 
 \section{results}
 
-By running the general algorithm for matrixes sized n=10, 100 and 1000, and comparing the solution to the exact solution I get the following plots.
+By running the general algorithm for matrixes sized n=10, 100 and 1000, and comparing the solution to the exact solution I get the following plots. 
 
 \begin{figure}[H]
   \center
@@ -291,7 +291,7 @@ By running the general algorithm for matrixes sized n=10, 100 and 1000, and comp
   \label{fig:plotn1000}
 \end{figure}
 
-I see that for n=10, the difference between the exact solution and the numerical solution at the points $x_i=ih$ is big compared to the numerical solution when $n=100$ and $n=1000$. This is because the approximation uses the Taylor expansion of $u(x_i\pm h)$ and I supposes that the terms $h^2~0$, but for a step length of $h=\frac{1}{11}$. This means that $h^2$ is not small enough to suppose it is zero.
+It does not really matter which algorithm one uses since they all solve the same problem with Gaussian elimination, it is just the number of FLOPS and memory read and writes that are different. I see that for n=10, the difference between the exact solution and the numerical solution at the points $x_i=ih$ is big compared to the numerical solution when $n=100$ and $n=1000$. This is because the approximation uses the Taylor expansion of $u(x_i\pm h)$ and it supposes that the terms $h^2\sim 0$, but for a step length of $h=\frac{1}{11}$, this is not the case. 
 
 It is also worth noting that since I use a static step length, i.e. it is a fixed length, I do not care about the steepness of the slope, this can cause errors. I see that for $n=100$, the length between the plotted solution at $x_i$ when $x_i\in (0,0.2)$ is big, while when $x_i\in (0.2,1)$ the length between the plotted solution is small. A way to fix this is to take into account the first derivative of $u(x)$ and make the step length dependent on it.
 
@@ -299,7 +299,7 @@ By running the different algorithms 10 times for different numbers of gridpoints
 \hfill\break
 
 \captionof{table}{Mean time of the different algorithms run 10 times and their standard deviations (STD)}
-
+{
 \centering
 \scalebox{0.8}{
     \begin{tabular}{||c|c|c|c||}
@@ -334,14 +334,14 @@ By running the different algorithms 10 times for different numbers of gridpoints
 }
 
 \hfill\break
-
-I see the expected result that the specialized algorithm is faster for smaller $n$, this is because the number of FLOPS done by the specialized algorithm is half of the FLOPS the general algorithm does. I also see that the time difference becomes smaller as the number of gridpoints increases. This is because as the number of gridpoints increases I move from using fast memory, i.e. the CPU cache, over to using slow memory. When this is the case, the time it takes to write and read from memory will be the main factor of time usage, which means that the time difference should decrease.
+}
+I see the expected result that the specialized algorithm is faster for smaller $n$, this is because the number of FLOPS done by the specialized algorithm is over half the FLOPS the general algorithm does. I also see that the time difference becomes smaller as the number of gridpoints increases. This is because as the number of gridpoints increases I move from using fast memory, i.e. the CPU cache, over to using slow memory. When this is the case, the time it takes to write and read from memory will be the main factor of time usage, which means that the time difference should decrease.
 \hfill\break
 
-The LU decomposition which was done using the Armadillo library did also perform as expected. The general LU decomposition does $\frac{2}{3}n^3$ FLOPS, but I expect that Armadillo is optimized in such a way that it notices if the matrix used has certain symmetries, thus it might do less FLOPS. But I know that it has do reserve memory for the matrix and the vectors, hence it reserves memory for at least $n\times n$ doubles. This means $8 n\times n$ bytes of memory. This means it has to do a lot more FLOPS, which means it will perform slower. When $n=10^4$ it has to reserve at least $0,8$ GB of memory, for $n=10^5$ it would have to reserve 80 GB of memory. This is far more than any standard pc has and would crash the program or the pc.
+The LU decomposition which was done using the Armadillo library did also perform as expected. The general LU decomposition does $\frac{2}{3}n^3$ FLOPS, but I expect that Armadillo is optimized in such a way that it notices if the matrix used has certain symmetries, thus it might do less FLOPS. But I know that it has do reserve memory for the matrix and the vectors, hence it reserves memory for at least $n^2$ doubles. This means $8 n^2$ bytes of memory. This means it has to do a lot more FLOPS, which means it will perform slower. When $n=10^4$ it has to reserve at least $0,8$ GB of memory, for $n=10^5$ it would have to reserve 80 GB of memory. This is far more than any standard pc has and would crash the program or the system.
 \hfill\break
 
-It is important to note that the time the program takes is highly environment dependent. The times given in this report is from a Microsoft Surface Pro running a Intel i5-7300U CPU at 2,60GHz. If it is done by a stronger or weaker system it will get better or worse times. The times are also dependent on what the operative system (OS) is doing. It is therefore important to make sure that the pc is in the same state when running the program.
+It is important to note that the time the program takes is highly environment dependent. The times given in this report is from a Microsoft Surface Pro running an Intel i5-7300U CPU at 2,60GHz. If it is done by a stronger or weaker system it will get better or worse times. The times are also dependent on what the operative system (OS) is doing. It is therefore important to make sure that the pc is in the same state when running the program.
 \hfill\break
 
 The relative error for the specialized algorithm is calculated using equation (\ref{eq:rel_error}) and is compared to the number of grid points in table (\ref{tb:error}). It is also plotted as a function of $\log{(n)}$ in figure (\ref{fig:rel_error}).
